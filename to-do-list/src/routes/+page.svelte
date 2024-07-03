@@ -8,12 +8,24 @@
     let textInput = "";
 
     function addToDo() {
+        if (textInput.trim() === "") {
+            alert("ToDo cannot be empty!");
+            return;
+        }
         toDoList = [...toDoList, { content: textInput, editing: false, checked: false }];
         textInput = "";
     }
 
     function setEditing(i, isEditing) {
         toDoList[i].editing = isEditing;
+    }
+
+    function saveEditedToDo(i) {
+        if (toDoList[i].content.trim() === "") {
+            alert("ToDo cannot be empty!");
+            return;
+        }
+        setEditing(i, false);
     }
 
     function deleteTodo(i) {
@@ -47,7 +59,7 @@
                 {/if}
                 <div class="btn-group">
                     {#if toDo.editing}
-                        <button class="btn btn-success" on:click={() => setEditing(i, false)}>Save</button>
+                        <button class="btn btn-success" on:click={() => saveEditedToDo(i)}>Save</button>
                     {:else}
                         <button class="btn btn-secondary" on:click={() => setEditing(i, true)}>Edit</button>
                     {/if}
